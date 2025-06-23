@@ -11,11 +11,12 @@ MultipleSatellite gps(Serial1, GPSBaud, SERIAL_8N1, RXPin, TXPin);
 
 void setup() {
     M5.begin();
-    M5.Power.begin();
-    M5.Display.setRotation(3);
+    Serial1.begin(115200);
+    while (!Serial1) {
+        delay(10); // Wait for Serial to be ready
+    }
     M5.Display.fillScreen(BLACK);
     
-    Serial1.begin(GPSBaud, SERIAL_8N1, RXPin, TXPin);
     gps.begin();
 
     // Set the GPS to a specific mode if needed
@@ -30,7 +31,11 @@ void setup() {
 }
 
 void loop() {
-
+    // Update GPS data
+    gps.updateGPS();
+    //Serial.println("%d",);
+    
+    delay(10);
 }
 
 // put function definitions here:
